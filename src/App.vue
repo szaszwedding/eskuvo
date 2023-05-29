@@ -1,67 +1,65 @@
 <template>
-	<div id="app">
-		<div class="container">
-			<div class="row">
-				<div class="mt-4">
-					<div class="upload-section d-flex justify-content-center">
-						<input
-							type="file"
-							ref="fileInput"
-							accept="image/*, video/*"
-							style="display: none"
-							@change="handleFileInputChange"
-							multiple
-						/>
-						<button class="btn btn-primary me-3" @click="openFileInput">
-							Valaszd ki a kepeket
-						</button>
-						<button
-							:disabled="isUploadDisabled"
-							class="btn btn-primary"
-							@click="uploadFiles"
-						>
-							Feltöltés
-						</button>
-					</div>
-					<div
-						class="d-flex justify-content-center mt-2"
-						v-if="selectedFilesCount > 0"
+	<div class="container">
+		<div class="row">
+			<div class="mt-4">
+				<div class="upload-section d-flex justify-content-center">
+					<input
+						type="file"
+						ref="fileInput"
+						accept="image/*, video/*"
+						style="display: none"
+						@change="handleFileInputChange"
+						multiple
+					/>
+					<button class="btn btn-success me-3" @click="openFileInput">
+						Válaszd ki a képeket!
+					</button>
+					<button
+						:disabled="isUploadDisabled"
+						class="btn btn-success"
+						@click="uploadFiles"
 					>
-						{{ selectedFilesCount }} feltöltésre kiválasztott fotó(k).
-					</div>
+						Feltöltés
+					</button>
 				</div>
-			</div>
-			<div class="row mt-4">
-				<div class="col">
-					<div class="header-image-container">
-						<img
-							src="https://weddingdz.blob.core.windows.net/images/albom-borito_1685352002325.jpeg"
-							alt="Header Image"
-							class="img-fluid"
-						/>
-					</div>
-				</div>
-			</div>
-
-			<div class="row mt-4">
-				<div class="col">
-					<div class="grid-container">
-						<a
-							v-for="(image, index) in images"
-							:key="index"
-							:href="image"
-							class="grid-item"
-						>
-							<img :src="image" alt="Image" />
-						</a>
-					</div>
+				<div
+					class="d-flex justify-content-center mt-2"
+					v-if="selectedFilesCount > 0"
+				>
+					{{ selectedFilesCount }} feltöltésre kiválasztott fotó(k).
 				</div>
 			</div>
 		</div>
-		<div v-if="loading" class="overlay">
-			<div class="spinner-border text-primary" role="status">
-				<span class="visually-hidden">Loading...</span>
+		<div class="row mt-4">
+			<div class="col">
+				<div class="header-image-container">
+					<img
+						src="https://weddingdz.blob.core.windows.net/images/albom-borito_1685352002325.jpeg"
+						alt="Header Image"
+						class="img-fluid"
+					/>
+				</div>
 			</div>
+		</div>
+
+		<div class="row mt-4">
+			<div class="col">
+				<div class="grid-container">
+					<a
+						v-for="(image, index) in images"
+						:key="index"
+						:href="image"
+						class="grid-item"
+					>
+						<img :src="image" alt="Image" />
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div v-if="loading" class="overlay">
+		<div class="spinner-border text-primary" role="status">
+			<span class="visually-hidden">Loading...</span>
 		</div>
 	</div>
 </template>
