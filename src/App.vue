@@ -15,9 +15,19 @@
 						<button class="btn btn-primary me-3" @click="openFileInput">
 							Valaszd ki a kepeket
 						</button>
-						<button class="btn btn-primary" @click="uploadFiles">
-							Feltoltes
+						<button
+							:disabled="isUploadDisabled"
+							class="btn btn-primary"
+							@click="uploadFiles"
+						>
+							Feltöltés
 						</button>
+					</div>
+					<div
+						class="d-flex justify-content-center mt-2"
+						v-if="selectedFilesCount > 0"
+					>
+						{{ selectedFilesCount }} feltöltésre kiválasztott fotó(k).
 					</div>
 				</div>
 			</div>
@@ -48,6 +58,11 @@
 				</div>
 			</div>
 		</div>
+		<div v-if="loading" class="overlay">
+			<div class="spinner-border text-primary" role="status">
+				<span class="visually-hidden">Loading...</span>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -63,12 +78,22 @@ export default {
 			selectedFiles: [],
 			connectionSAS: process.env.VUE_APP_CONNECTION_SAS,
 			containerName: "images",
+			loading: false,
 		};
 	},
-
+	computed: {
+		isUploadDisabled() {
+			return this.selectedFiles.length === 0;
+		},
+		selectedFilesCount() {
+			return this.selectedFiles.length;
+		},
+	},
 	async mounted() {
+		this.loading = true;
 		await this.fetchImages();
 		this.lightbox = new SimpleLightbox(".grid-container a");
+		this.loading = false;
 	},
 	methods: {
 		async fetchImages() {
@@ -110,6 +135,7 @@ export default {
 		},
 
 		async uploadFiles() {
+			this.loading = true;
 			try {
 				const files = this.selectedFiles;
 				const blobServiceClient = new BlobServiceClient(this.connectionSAS);
@@ -125,11 +151,13 @@ export default {
 					await blockBlobClient.uploadBrowserData(file);
 				}
 
+				this.selectedFiles = [];
 				console.log("Files uploaded successfully!");
 				await this.fetchImages();
 			} catch (error) {
 				console.error("Error uploading files:", error);
 			}
+			this.loading = false;
 		},
 
 		generateUniqueBlobName(originalName) {
@@ -161,18 +189,16 @@ img {
 	width: 100%;
 }
 
-input[type="file"]::file-selector-button {
-	margin-right: 20px;
-	border: none;
-	background: #084cdf;
-	padding: 10px 20px;
-	border-radius: 10px;
-	color: #fff;
-	cursor: pointer;
-	transition: background 0.2s ease-in-out;
-}
-
-input[type="file"]::file-selector-button:hover {
-	background: #0d45a5;
+.overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 9999;
 }
 </style>
