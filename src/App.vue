@@ -52,8 +52,8 @@
 							</a>
 						</template>
 						<template v-else-if="isVideo(image)">
-							<video controls>
-								<source :src="image" type="video/mp4" />
+							<video controls poster="https://weddingdz.blob.core.windows.net/images/albom-borito_1685352002325.jpeg">
+								<source :src="image"/>
 								Your browser does not support the video tag.
 							</video>
 						</template>
