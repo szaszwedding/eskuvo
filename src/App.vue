@@ -45,14 +45,19 @@
 		<div class="row mt-4">
 			<div class="col">
 				<div class="grid-container">
-					<a
-						v-for="(image, index) in images"
-						:key="index"
-						:href="image"
-						class="grid-item"
-					>
-						<img :src="image" alt="Image" />
-					</a>
+					<div v-for="(image, index) in images" :key="index">
+						<template v-if="isImage(image)">
+							<a :href="image" class="grid-item">
+								<img :src="image" alt="Image" />
+							</a>
+						</template>
+						<template v-else-if="isVideo(image)">
+							<video controls>
+								<source :src="image" type="video/mp4" />
+								Your browser does not support the video tag.
+							</video>
+						</template>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -165,6 +170,23 @@ export default {
 
 			return `${fileName}_${uniqueIdentifier}${fileExtension}`;
 		},
+		removeQueryParams(filename) {
+			const index = filename.indexOf("?");
+			if (index !== -1) {
+				return filename.substring(0, index);
+			}
+			return filename;
+		},
+		isImage(file) {
+			const removedParams = this.removeQueryParams(file);
+			const extension = removedParams.split(".").pop().toLowerCase();
+			return ["jpg", "jpeg", "png", "gif"].includes(extension);
+		},
+		isVideo(file) {
+			const removedParams = this.removeQueryParams(file);
+			const extension = removedParams.split(".").pop().toLowerCase();
+			return ["mp4", "mov", "avi", "mkv"].includes(extension);
+		},
 	},
 };
 </script>
@@ -183,7 +205,7 @@ export default {
 	max-height: 100%;
 }
 
-img {
+img, video {
 	width: 100%;
 }
 
