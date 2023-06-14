@@ -107,8 +107,6 @@ export default {
 	async mounted() {
 		const urlParams = new URLSearchParams(window.location.search);
 		const paramValue = urlParams.get("admin");
-
-		console.log(paramValue); // Output: "value"
 		if (paramValue == this.adminParam) {
 			this.isAdmin = true;
 		}
@@ -218,15 +216,18 @@ export default {
 			const containerClient = blobServiceClient.getContainerClient(
 				this.containerName
 			);
-			const blobName = this.getImageBlobName(this.removeQueryParams(image));
+			const blobName = decodeURI(
+				this.getImageBlobName(this.removeQueryParams(image))
+			);
 
 			containerClient
 				.deleteBlob(blobName)
 				.then(() => {
-					console.log(`Blob "${blobName}" deleted.`);
+					alert("Deleted");
 					this.images.splice(index, 1);
 				})
 				.catch((error) => {
+					alert("Error");
 					console.error("Error deleting blob:", error);
 				});
 		},
