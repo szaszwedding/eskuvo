@@ -52,11 +52,21 @@
 							</a>
 						</template>
 						<template v-else-if="isVideo(image)">
-							<video controls poster="https://weddingdz.blob.core.windows.net/images/albom-borito_1685352002325.jpeg">
-								<source :src="image"/>
+							<video
+								controls
+								poster="https://weddingdz.blob.core.windows.net/images/albom-borito_1685352002325.jpeg"
+							>
+								<source :src="image" />
 								Your browser does not support the video tag.
 							</video>
 						</template>
+						<button
+							v-if="isAdmin"
+							@click="showConfirmation(index)"
+							class="btn btn-danger delete-button"
+						>
+							x
+						</button>
 					</div>
 				</div>
 			</div>
@@ -76,6 +86,8 @@ import SimpleLightbox from "simplelightbox";
 export default {
 	data() {
 		return {
+			isAdmin: false,
+			adminParam: process.env.VUE_APP_ADMIN_COMMAND,
 			images: [],
 			lightbox: null,
 			selectedFiles: [],
@@ -93,6 +105,13 @@ export default {
 		},
 	},
 	async mounted() {
+		const urlParams = new URLSearchParams(window.location.search);
+		const paramValue = urlParams.get("admin");
+
+		console.log(paramValue); // Output: "value"
+		if (paramValue == this.adminParam) {
+			this.isAdmin = true;
+		}
 		this.loading = true;
 		await this.fetchImages();
 		this.lightbox = new SimpleLightbox(".grid-container a");
@@ -187,6 +206,34 @@ export default {
 			const extension = removedParams.split(".").pop().toLowerCase();
 			return ["mp4", "mov", "avi", "mkv"].includes(extension);
 		},
+
+		showConfirmation(index) {
+			if (confirm("Are you sure you want to delete this item?")) {
+				this.deleteItem(index);
+			}
+		},
+		deleteItem(index) {
+			const image = this.images[index];
+			const blobServiceClient = new BlobServiceClient(this.connectionSAS);
+			const containerClient = blobServiceClient.getContainerClient(
+				this.containerName
+			);
+			const blobName = this.getImageBlobName(this.removeQueryParams(image));
+
+			containerClient
+				.deleteBlob(blobName)
+				.then(() => {
+					console.log(`Blob "${blobName}" deleted.`);
+					this.images.splice(index, 1);
+				})
+				.catch((error) => {
+					console.error("Error deleting blob:", error);
+				});
+		},
+		getImageBlobName(imageUrl) {
+			const segments = imageUrl.split("/");
+			return segments[segments.length - 1];
+		},
 	},
 };
 </script>
@@ -198,14 +245,14 @@ export default {
 }
 
 .grid-item {
-	display: block;
 	width: 100%;
 	height: auto;
 	max-width: 100%;
 	max-height: 100%;
 }
 
-img, video {
+img,
+video {
 	width: 100%;
 }
 
@@ -220,5 +267,10 @@ img, video {
 	align-items: center;
 	justify-content: center;
 	z-index: 9999;
+}
+
+.delete-button {
+	position: relative;
+	top: -45px;
 }
 </style>
