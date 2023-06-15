@@ -26,7 +26,7 @@
 					class="d-flex justify-content-center mt-2"
 					v-if="selectedFilesCount > 0"
 				>
-					{{ selectedFilesCount }} feltöltésre kiválasztott fotó(k)
+					{{ selectedFilesCount }} feltöltésre kiválasztott fotó(k).
 				</div>
 			</div>
 		</div>
@@ -34,7 +34,7 @@
 			<div class="col">
 				<div class="header-image-container">
 					<img
-						src="https://weddingdz.blob.core.windows.net/images/albom-borito_1685352002325.jpeg"
+						src="https://weddingdz.blob.core.windows.net/images/fedolap.jpeg"
 						alt="Header Image"
 						class="img-fluid"
 					/>
