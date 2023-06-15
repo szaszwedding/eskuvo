@@ -26,7 +26,7 @@
 					class="d-flex justify-content-center mt-2"
 					v-if="selectedFilesCount > 0"
 				>
-					{{ selectedFilesCount }} feltöltésre kiválasztott fotó(k).
+					{{ selectedFilesCount }} feltöltésre kiválasztott fotó(k)
 				</div>
 			</div>
 		</div>
