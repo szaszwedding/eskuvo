@@ -1,6 +1,6 @@
 <template>
 	<div class="container">
-		<div class="row">
+		<!--<div class="row">
 			<div class="mt-4">
 				<div class="upload-section d-flex justify-content-center">
 					<input
@@ -29,7 +29,7 @@
 					{{ selectedFilesCount }} feltöltésre kiválasztott fotó(k).
 				</div>
 			</div>
-		</div>
+		</div>-->
 		<div class="row mt-4">
 			<div class="col">
 				<div class="header-image-container">
@@ -43,8 +43,8 @@
 		</div>
 
 		<div class="row mt-4">
-			<div class="col">
-				<div class="grid-container">
+			<div class="col d-flex justify-content-center">
+				<!--<div class="grid-container">
 					<div v-for="(image, index) in images" :key="index">
 						<template v-if="isImage(image)">
 							<a :href="image" class="grid-item">
@@ -68,7 +68,8 @@
 							x
 						</button>
 					</div>
-				</div>
+				</div>-->
+				<h1><i>Technikai okok miatt az oldal jelenleg nem elérhető!</i></h1>
 			</div>
 		</div>
 	</div>
@@ -81,7 +82,7 @@
 
 <script>
 import { BlobServiceClient } from "@azure/storage-blob";
-import SimpleLightbox from "simplelightbox";
+//import SimpleLightbox from "simplelightbox";
 
 export default {
 	data() {
@@ -105,15 +106,15 @@ export default {
 		},
 	},
 	async mounted() {
-		const urlParams = new URLSearchParams(window.location.search);
-		const paramValue = urlParams.get("admin");
-		if (paramValue == this.adminParam) {
-			this.isAdmin = true;
-		}
-		this.loading = true;
-		await this.fetchImages();
-		this.lightbox = new SimpleLightbox(".grid-container a");
-		this.loading = false;
+		//const urlParams = new URLSearchParams(window.location.search);
+		//const paramValue = urlParams.get("admin");
+		//if (paramValue == this.adminParam) {
+		//	this.isAdmin = true;
+		//}
+		//this.loading = true;
+		//await this.fetchImages();
+		//this.lightbox = new SimpleLightbox(".grid-container a");
+		//this.loading = false;
 	},
 	methods: {
 		async fetchImages() {
