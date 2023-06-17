@@ -34,7 +34,7 @@
 			<div class="col">
 				<div class="header-image-container">
 					<img
-						src="https://weddingdz.blob.core.windows.net/images/fedolap.jpeg"
+						src="@/assets/fedolap.jpeg"
 						alt="Header Image"
 						class="img-fluid"
 					/>
