@@ -54,7 +54,7 @@
 						<template v-else-if="isVideo(image)">
 							<video
 								controls
-								poster="https://weddingdz.blob.core.windows.net/images/albom-borito_1685352002325.jpeg"
+								poster="@/assets/fedolap.jpeg"
 							>
 								<source :src="image" />
 								Your browser does not support the video tag.
