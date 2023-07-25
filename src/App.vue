@@ -273,4 +273,9 @@ video {
 	position: relative;
 	top: -45px;
 }
+
+.btn-success {
+	background-color: #c26987 !important;
+	border-color: #c26987 !important;
+}
 </style>
