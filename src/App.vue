@@ -35,7 +35,7 @@
 			<div class="col">
 				<div class="header-image-container">
 					<img
-						src="@/assets/fedolap.jpeg"
+						src="@/assets/header-szasz.jpg"
 						alt="Header Image"
 						class="img-fluid"
 					/>
@@ -92,7 +92,7 @@ export default {
 			lightbox: null,
 			selectedFiles: [],
 			connectionSAS: process.env.VUE_APP_CONNECTION_SAS,
-			containerName: "images",
+			containerName: "szasz-images",
 			loading: false,
 		};
 	},
