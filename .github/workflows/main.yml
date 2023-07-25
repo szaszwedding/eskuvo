@@ -12,8 +12,8 @@ jobs:
     - id: Build-Vue
       uses: xRealNeon/VuePagesAction@1.0.0
       with:
-        username: 'martonzoltan'
-        reponame: 'eskuvo'
+        username: 'szaszwedding'
+        reponame: 'wedding'
         token: ${{ secrets.TOKEN }}
       env:
         VUE_APP_CONNECTION_SAS: ${{ secrets.VUE_APP_CONNECTION_SAS }}
