@@ -1,5 +1,4 @@
 <template>
-
 	<div class="container">
 		<div class="row">
 			<div class="mt-4">
@@ -52,10 +51,7 @@
 							</a>
 						</template>
 						<template v-else-if="isVideo(image)">
-							<video
-								controls
-								poster="@/assets/fedolap.jpeg"
-							>
+							<video controls poster="@/assets/fedolap.jpeg">
 								<source :src="image" />
 								Your browser does not support the video tag.
 							</video>
@@ -239,6 +235,9 @@ export default {
 };
 </script>
 <style>
+#app {
+	background-color: #fcfbf9;
+}
 .grid-container {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
