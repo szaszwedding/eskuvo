@@ -51,7 +51,7 @@
 							</a>
 						</template>
 						<template v-else-if="isVideo(image)">
-							<video controls poster="@/assets/fedolap.jpeg">
+							<video controls poster="@/assets/header-szasz.jpg">
 								<source :src="image" />
 								Your browser does not support the video tag.
 							</video>
